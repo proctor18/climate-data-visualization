@@ -1,0 +1,168 @@
+/*
+Hamburger Menu YouTube Tutorial: https://www.youtube.com/watch?v=dAIVbLrAb_U -- Web Dev Simplified
+*/
+
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --bar-width: 60px;
+    --bar-height: 8px;
+    --bar-radius: 1000px;
+
+    --background-colour: #333;
+    --foreground-colour: #fff;
+
+    --hamburger-gap: 6px;
+    --hamburger-speed: 200ms ease-in-out;
+    --hamburger-margin: 10px;
+    --hamburger-height: calc(var(--bar-height) * 3 + (var(--hamburger-gap) * 2));
+}
+
+h1 {
+    color: #fff;
+}
+
+
+.country {
+    fill: #ccc;
+    stroke: #333;
+    stroke-width: 0.5px;
+} :hover {
+    fill: orange;
+}
+
+.container-image {
+    background-color: lightgreen;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.container-viz {
+    background-color: darkslategray;
+    border-radius: 25px;
+    color: white;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Two columns of equal width */
+    gap: 20px; /* Space between the cards */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    padding: 20px;
+    width: 80%;
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+.card-viz-1, .card-viz-2 {
+    background-color: white;
+    color: black;
+    padding: 20px;
+    border-radius: 10px;
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+.card-viz-top {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: auto;
+    height: auto;
+}
+
+/* Sidebar */
+.menu-ham {
+    --x-width: calc(var(--hamburger-height) * 1.4142135623730951);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--hamburger-gap);
+
+    width: max-content;
+    position: absolute;
+    top: var(--hamburger-margin);
+    left: var(--hamburger-margin);
+
+    cursor: pointer;
+    z-index: 2;
+}
+
+.menu-ham::before,
+.menu-ham::after,
+.menu-ham input {
+    
+    content: '';
+    width: var(--bar-width);
+    height: var(--bar-height);
+    background-color: var(--foreground-colour);
+    border-radius: var(--bar-radius);
+    transform-origin: left center;
+    transition: opacity var(--hamburger-speed), width var(--hamburger-speed), 
+    rotate var(--hamburger-speed), translate var(--hamburger-speed), background-color (--background-colour);
+}
+
+.menu-ham input {
+    appearance: none;
+    padding: 0;
+    margin: 0;
+    outline: none;
+    pointer-events: none;
+}
+
+.menu-ham:has(input:checked)::before {
+    rotate: 45deg;
+    width: var(--x-width);
+    translate: 0, calc(var(--bar-height) / 2)
+}
+
+.menu-ham:has(input:checked)::after {
+    rotate: -45deg;
+    width: var(--x-width);
+    translate: 0, calc(var(--bar-height) / -2)
+}
+
+.menu-ham input:checked {
+    opacity: 0;
+    width: 0;
+}
+
+.sidebar {
+    transition: translate var(--hamburger-speed);
+    translate: -100%;
+    padding: 0.5rem 1rem;
+    padding-top: calc(var(--hamburger-height) + var(--hamburger-margin) + 1rem);
+    background-color: var(--foreground-colour);
+    color: var(--background-colour);
+    max-width: 10rem;
+    min-height: 100vh;
+}
+
+.menu-ham.menu-ham:has(input:checked) + .sidebar {
+    translate: 0;
+}

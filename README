@@ -1,0 +1,29 @@
+# Climate Data Visualization Site
+***
+A website to display visualizations of global climate vital sign data, including surface air temperature anomalies, ocean water temperatures, and atmospheric carbon dioxide levels. Including comprehensive data between (year1 -- year2). 
+
+TEMPORARY README DRAFT 1
+
+### About
+***
+
+### Outcomes
+***
+
+
+### Credits
+***
+Environmental Data Analysis and Organization -- <br>
+Data Visualizations -- <br>
+Backend Server -- <br>
+Frontend Server -- <br>
+Wireframe and Frontend Design -- <br>
+Testing -- <br>
+
+### Citations
+***
+Huang, B., X. Yin, M. J. Menne, R. Vose, and H. Zhang, NOAA Global Surface Temperature Dataset (NOAAGlobalTemp), Version 6.0.0, Entire Dataset. NOAA National Centers for Environmental Information. https://doi.org/10.25921/rzxg-p717
+
+Mishonov A.V., T. P. Boyer, O. K. Baranova, C. N. Bouchard, S. Cross, H. E. Garcia, R.  A. Locarnini, C. R. Paver, J. R. Reagan, Z. Wang, D. Seidov, A. I. Grodsky, J. G. Beauchamp, (2024): World Ocean Database 2023. C. Bouchard, Technical Ed., NOAA Atlas NESDIS 97, 206 pp. Coming Soon - doi.org/10.25923/z885-h264 https://www.ncei.noaa.gov/data/oceans/woa/WOD/DOC/wod_intro.pdf
+
+Dr. Xin Lan, NOAA/GML (gml.noaa.gov/ccgg/trends/) and Dr. Ralph Keeling, Scripps Institution of Oceanography (scrippsco2.ucsd.edu/).

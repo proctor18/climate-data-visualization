@@ -1,0 +1,7 @@
+tempAnomGraphs/
+**/.DS_Store
+__pycache__/
+.tmp.driveupload/
+
+# File too large
+**/NOAAGlobalTemp_v6.csv
