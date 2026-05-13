@@ -184,32 +184,36 @@ function resolveLocation(datum: unknown, element?: SVGCircleElement): Location |
 
 function createPopup(location: Location) {
   select('#popup').remove()
+  const { year, details } = formatBrief(location.brief)
 
   const popup = select('body')
     .append('div')
     .attr('id', 'popup')
     .style('position', 'fixed')
     .style('left', '50%')
-    .style('top', '35%')
+    .style('top', '50%')
     .style('transform', 'translate(-50%, -50%)')
-    .style('background', 'rgba(15, 23, 42, 0.95)')
-    .style('padding', '24px')
-    .style('border', '1px solid rgba(148, 163, 184, 0.3)')
+    .style('box-sizing', 'border-box')
+    .style('background', 'rgba(22, 33, 52, 0.98)')
+    .style('padding', 'clamp(16px, 3vw, 24px)')
+    .style('border', '1px solid rgba(148, 163, 184, 0.45)')
     .style('border-radius', '16px')
     .style('z-index', '1000')
-    .style('width', '90%')
-    .style('max-width', '980px')
-    .style('max-height', '85vh')
-    .style('overflow', 'auto')
+    .style('width', 'min(1280px, calc(100vw - clamp(48px, 8vw, 120px)))')
+    .style('max-height', 'calc(100dvh - clamp(48px, 8vw, 120px))')
+    .style('overflow-y', 'auto')
+    .style('overscroll-behavior', 'contain')
     .style('color', 'white')
+    .style('box-shadow', '0 24px 80px rgba(0, 0, 0, 0.55)')
 
   const header = popup.append('div').style('display', 'flex').style('justify-content', 'space-between').style('align-items', 'center')
   header
     .append('h3')
     .text(location.name)
     .style('margin', '0')
-    .style('font-size', '1.5rem')
+    .style('font-size', 'clamp(1.4rem, 4vw, 2rem)')
     .style('font-weight', '700')
+    .style('line-height', '1.15')
 
   header
     .append('button')
@@ -224,7 +228,7 @@ function createPopup(location: Location) {
   const content = popup
     .append('div')
     .style('display', 'grid')
-    .style('grid-template-columns', '1fr 1.2fr')
+    .style('grid-template-columns', 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))')
     .style('gap', '20px')
     .style('margin-top', '18px')
 
@@ -234,23 +238,67 @@ function createPopup(location: Location) {
     .style('border-radius', '14px')
     .style('overflow', 'hidden')
     .style('background', '#0f172a')
-    .style('border', '1px solid rgba(148, 163, 184, 0.15)')
+    .style('border', '1px solid rgba(148, 163, 184, 0.25)')
     .append('img')
     .attr('src', getImagePath(location.type))
     .attr('alt', location.name)
     .style('width', '100%')
+    .style('max-height', 'min(42vh, 380px)')
+    .style('object-fit', 'cover')
     .style('display', 'block')
 
   const textContainer = content.append('div')
-  textContainer
-    .append('p')
-    .html(`<strong>${location.brief}</strong>`)
-    .style('margin', '0 0 16px')
-    .style('line-height', '1.6')
+
+  if (year) {
+    textContainer
+      .append('p')
+      .text(year)
+      .style('margin', '0 0 10px')
+      .style('font-size', 'clamp(1.6rem, 5vw, 2.4rem)')
+      .style('font-weight', '800')
+      .style('line-height', '1')
+      .style('color', '#67e8f9')
+  }
+
+  if (details.length > 0) {
+    const detailList = textContainer
+      .append('div')
+      .style('display', 'flex')
+      .style('flex-wrap', 'wrap')
+      .style('gap', '8px')
+      .style('margin', '0 0 18px')
+
+    details.forEach((detail) => {
+      detailList
+        .append('span')
+        .text(detail)
+        .style('display', 'inline-flex')
+        .style('align-items', 'center')
+        .style('border', '1px solid rgba(103, 232, 249, 0.25)')
+        .style('background', 'rgba(8, 47, 73, 0.35)')
+        .style('border-radius', '999px')
+        .style('padding', '6px 10px')
+        .style('font-size', 'clamp(0.8rem, 2.5vw, 0.95rem)')
+        .style('font-weight', '700')
+        .style('line-height', '1.25')
+        .style('color', '#e0f2fe')
+    })
+  } else {
+    textContainer
+      .append('p')
+      .text(location.brief)
+      .style('margin', '0 0 16px')
+      .style('line-height', '1.5')
+      .style('font-size', 'clamp(1rem, 2.5vw, 1.2rem)')
+      .style('font-weight', '700')
+  }
+
   textContainer
     .append('p')
     .html(location.info)
+    .style('margin', '0')
     .style('line-height', '1.8')
+    .style('font-size', 'clamp(0.95rem, 2vw, 1.05rem)')
     .style('opacity', '0.95')
 
   popup
@@ -284,6 +332,12 @@ function showTooltip(event: MouseEvent, location: Location) {
 
 function hideTooltip() {
   select('#tooltip').remove()
+}
+
+function formatBrief(brief: string) {
+  const parts = brief.split('|').map((part) => part.trim()).filter(Boolean)
+  const [year, ...details] = parts
+  return { year, details }
 }
 
 export default function ExtremeWeatherMap() {
