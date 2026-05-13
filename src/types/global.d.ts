@@ -1,0 +1,5 @@
+declare module '*.css'
+declare module 'papaparse'
+declare module 'topojson-client'
+declare module 'd3-selection'
+declare module 'world-atlas/land-110m.json'
